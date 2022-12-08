@@ -6,4 +6,7 @@ module.exports = {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
   },
+  externals: {
+    vscode: "commonjs vscode",
+  },
 };
