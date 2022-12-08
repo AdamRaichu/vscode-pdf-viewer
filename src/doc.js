@@ -1,8 +1,11 @@
 const vscode = require("vscode");
 
-export default class PDFDoc extends vscode.CustomDocument {
+export default class PDFDoc {
   constructor(uri){
     super()
-    this.uri = uri;
+    this._uri = uri;
   }
+
+  async dispose() {};
+  uri = this._uri;
 }
