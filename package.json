@@ -13,8 +13,8 @@
     "url": "https://github.com/AdamRaichu/vscode-webext-template"
   },
   "version": "1.0.0",
-  "browser": "/extension.js",
-  "main": "/extension.js",
+  "browser": "/dist/main.js",
+  "main": "/dist/main.js",
   "activationEvents": [],
   "engines": {
     "vscode": "^1.63.0"
