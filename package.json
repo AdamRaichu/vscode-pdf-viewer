@@ -19,5 +19,8 @@
   "engines": {
     "vscode": "^1.63.0"
   },
-  "contributes": {}
+  "contributes": {},
+  "scripts": {
+    "build": "webpack"
+  }
 }

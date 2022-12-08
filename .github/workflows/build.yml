@@ -1,0 +1,26 @@
+name: Build with Webpack
+on:
+  push:
+    paths:
+      - "src/**"
+concurrency:
+  group: webpack
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Build
+        run: |
+          npm install webpack webpack-cli --save-dev
+          npm run build
+      - name: Commit Changes
+        run: |
+          git pull
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add .
+          git commit -m "Build"
+          git push
