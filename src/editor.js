@@ -1,4 +1,5 @@
-var vscode = require("vscode");
+const vscode = require("vscode");
+const PDFDoc = require("./doc");
 
 export default class PDFEdit {
   static register() {
@@ -10,7 +11,7 @@ export default class PDFEdit {
 
   constructor() {}
 
-  async resolveCustomEditor(document, panel, _token) {
+  async resolveCustomEditor(_document, panel, _token) {
     panel.webview.html = `<!DOCTYPE html>
 <html>
 
@@ -42,7 +43,7 @@ export default class PDFEdit {
 
 <body>
 
-  <iframe src="https://adamraichu.github.io/"
+  <iframe id="frame" src="https://adamraichu.github.io/"
     frameborder="0"
     marginheight="0"
     marginwidth="0"
@@ -56,5 +57,7 @@ export default class PDFEdit {
 </html>`;
   }
 
-  async openCustomDocument(uri, context, _token) {}
+  async openCustomDocument(uri, _context, _token) {
+    return new PDFDoc(uri);
+  }
 }
