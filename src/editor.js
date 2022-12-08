@@ -1,6 +1,6 @@
 var vscode = require("vscode");
 
-export class PDFEdit {
+export default class PDFEdit {
   static register() {
     const provider = new PDFEdit();
     return vscode.window.registerCustomEditorProvider(PDFEdit.viewType, provider);
