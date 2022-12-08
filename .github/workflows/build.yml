@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - "src/**"
+  workflow_dispatch:
 concurrency:
   group: webpack
   cancel-in-progress: true
@@ -15,6 +16,7 @@ jobs:
       - name: Build
         run: |
           npm install webpack webpack-cli --save-dev
+          npm install @types/vscode --save
           npm run build
       - name: Commit Changes
         run: |
