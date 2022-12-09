@@ -1,5 +1,16 @@
 const vscode = require("vscode");
-const PDFDoc = require("./doc.js");
+// const PDFDoc = require("./doc.js");
+
+export default class PDFDoc {
+  constructor(uri) {
+    this._uri = uri;
+  }
+
+  async dispose() {}
+  get uri() {
+    return this.uri;
+  }
+}
 
 export default class PDFEdit {
   static register() {
