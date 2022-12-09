@@ -6,7 +6,7 @@ on:
   workflow_dispatch:
     inputs:
       type:
-        type: option
+        type: choice
         options:
           - "pre"
           - "full"
