@@ -7,7 +7,7 @@ on:
     inputs:
       type:
         type: option
-        choices:
+        options:
           - "pre"
           - "full"
 concurrency:
