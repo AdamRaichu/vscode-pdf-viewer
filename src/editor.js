@@ -17,7 +17,7 @@ class PDFDoc {
       const p = vscode.workspace.fs.readFile(uri);
       var z = new JSZip();
       z.file("filename.pdf", p);
-      z.files[0].async("blob").then(
+      z.files["filename.pdf"].async("blob").then(
         function (f) {
           resolve(URL.createObjectURL(f));
         },
