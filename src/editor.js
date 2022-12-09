@@ -1,7 +1,7 @@
 const vscode = require("vscode");
 // const PDFDoc = require("./doc.js");
 
-export default class PDFDoc {
+class PDFDoc {
   constructor(uri) {
     this._uri = uri;
   }
