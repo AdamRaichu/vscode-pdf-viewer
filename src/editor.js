@@ -14,7 +14,7 @@ class PDFDoc {
 
   async getFileBlobUri() {
     var r = new Promise(function (resolve, reject) {
-      const p = vscode.workspace.fs.readFile(this.uri);
+      const p = vscode.workspace.fs.readFile(this._uri);
       var z = new JSZip();
       z.file("filename.pdf", p);
       z.files[0].async("blob").then(
