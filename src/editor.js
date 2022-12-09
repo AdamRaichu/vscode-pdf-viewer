@@ -8,7 +8,7 @@ class PDFDoc {
 
   async dispose() {}
   get uri() {
-    return this.uri;
+    return this._uri;
   }
 }
 
