@@ -12,14 +12,14 @@ class PDFDoc {
     return this._uri;
   }
 
-  async getFileBlobUri(uri) {
+  async getFileUri(uri) {
     var r = new Promise(function (resolve, reject) {
       const p = vscode.workspace.fs.readFile(uri);
       var z = new JSZip();
       z.file("filename.pdf", p);
-      z.files["filename.pdf"].async("blob").then(
+      z.files["filename.pdf"].async("base64").then(
         function (f) {
-          resolve(URL.createObjectURL(f));
+          resolve("data:application/pdf;base64," + f);
         },
         function (err) {
           vscode.window.showErrorMessage("There was an error converting the pdf file to a url.");
@@ -74,7 +74,7 @@ export default class PDFEdit {
 </body>
 
 </html>`;
-    panel.webview.postMessage({ command: "setFrameURI", URI: await document.getFileBlobUri(document.uri) });
+    panel.webview.postMessage({ command: "setFrameURI", URI: await document.getFileUri(document.uri) });
   }
 
   async openCustomDocument(uri, _context, _token) {
