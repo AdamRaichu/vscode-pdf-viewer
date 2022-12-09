@@ -1,5 +1,5 @@
 const vscode = require("vscode");
-const PDFDoc = require("./doc");
+const PDFDoc = require("./doc.js");
 
 export default class PDFEdit {
   static register() {
