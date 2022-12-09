@@ -25,6 +25,7 @@ jobs:
           npm install jszip --save
           npm run build
       - name: Commit Changes
+        continue-on-error: true
         run: |
           git pull
           git config user.name github-actions
