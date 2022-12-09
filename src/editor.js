@@ -12,9 +12,9 @@ class PDFDoc {
     return this._uri;
   }
 
-  async getFileBlobUri() {
+  async getFileBlobUri(uri) {
     var r = new Promise(function (resolve, reject) {
-      const p = vscode.workspace.fs.readFile(this._uri);
+      const p = vscode.workspace.fs.readFile(uri);
       var z = new JSZip();
       z.file("filename.pdf", p);
       z.files[0].async("blob").then(
@@ -74,7 +74,7 @@ export default class PDFEdit {
 </body>
 
 </html>`;
-    panel.webview.postMessage({ command: "setFrameURI", URI: await document.getFileBlobUri() });
+    panel.webview.postMessage({ command: "setFrameURI", URI: await document.getFileBlobUri(document.uri) });
   }
 
   async openCustomDocument(uri, _context, _token) {
