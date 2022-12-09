@@ -1,5 +1,4 @@
 const vscode = require("vscode");
-// const PDFDoc = require("./doc.js");
 
 class PDFDoc {
   constructor(uri) {
@@ -23,38 +22,27 @@ export default class PDFEdit {
   constructor() {}
 
   async resolveCustomEditor(_document, panel, _token) {
+    panel.webview.options = {
+      enableScripts: true,
+    };
+    var extUri = vscode.extensions.getExtension("adamraichu.pdf-viewer").extensionUri;
     panel.webview.html = `<!DOCTYPE html>
 <html>
 
 <head>
-  <style type="text/css">
-    html {
-      overflow: auto;
-    }
-
-    html,
-    body,
-    div,
-    iframe {
-      margin: 0px;
-      padding: 0px;
-      height: 100%;
-      border: none;
-    }
-
-    iframe {
-      display: block;
-      width: 100%;
-      border: none;
-      overflow-y: auto;
-      overflow-x: hidden;
-    }
-  </style>
+  <script>
+    window.addEventListener("message", e => {
+      if (e.data.command === "setFrameURI") {
+        document.getElementById("frame").src = e.data.URI;
+      }
+    });
+  </script>
+  <link rel="stylesheet" href="${panel.webview.asWebviewUri(vscode.Uri.joinPath(extUri, "media", "iframe.css"))}">
 </head>
 
 <body>
 
-  <iframe id="frame" src="https://adamraichu.github.io/"
+  <iframe id="frame" src="data:text/html,PDF Viewer is loading your content..."
     frameborder="0"
     marginheight="0"
     marginwidth="0"
@@ -66,6 +54,7 @@ export default class PDFEdit {
 </body>
 
 </html>`;
+    // panel.webview.postMessage({ command: "setFrameURI", URI: "" });
   }
 
   async openCustomDocument(uri, _context, _token) {
