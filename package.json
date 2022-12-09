@@ -3,7 +3,7 @@
   "displayName": "PDF Viewer",
   "description": "An extension which allows for viewing PDF files directly in VS Code Web using the browser native viewer.",
   "publisher": "adamraichu",
-  "icon": "logo.png",
+  "icon": "pdf-flat.png",
   "author": {
     "name": "AdamRaichu"
   },
