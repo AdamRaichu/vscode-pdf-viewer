@@ -4,6 +4,12 @@ on:
     paths:
       - "src/**"
   workflow_dispatch:
+    inputs:
+      type:
+        type: option
+        choices:
+          - "pre"
+          - "full"
 concurrency:
   group: webpack
   cancel-in-progress: true
@@ -16,6 +22,7 @@ jobs:
       - name: Build
         run: |
           npm install webpack webpack-cli --save-dev
+          npm install jszip --save
           npm run build
       - name: Commit Changes
         run: |
@@ -25,3 +32,13 @@ jobs:
           git add .
           git commit -m "Build"
           git push
+      - name: Package Extension (pre-release)
+        if: contains(github.event.head_commit.message, '[build pre]') || (github.event_name == 'workflow_dispatch' && inputs.type == 'pre')
+        uses: AdamRaichu/vscode-pdf-viewer/.github/workflows/package.yml@main
+        with:
+          command: vsce package --pre-release --target web
+      - name: Package Extension (full)
+        if: contains(github.event.head_commit.message, '[build full]') || (github.event_name == 'workflow_dispatch' && inputs.type == 'full')
+        uses: AdamRaichu/vscode-pdf-viewer/.github/workflows/package.yml@main
+        with:
+          command: vsce package --target web

@@ -1,15 +1,12 @@
 name: Package Extension
 on:
-  workflow_dispatch:
+  workflow_call:
     inputs:
       command:
         description: "Full or Pre?"
         required: true
-        default: "vsce package"
-        type: choice
-        options:
-          - "vsce package"
-          - "vsce package --pre-release"
+        default: "vsce package --target web"
+        type: string
 jobs:
   build:
     runs-on: windows-latest

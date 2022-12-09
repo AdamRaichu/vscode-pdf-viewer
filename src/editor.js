@@ -1,4 +1,5 @@
 const vscode = require("vscode");
+const JSZip = require("jszip");
 
 class PDFDoc {
   constructor(uri) {
@@ -6,8 +7,27 @@ class PDFDoc {
   }
 
   async dispose() {}
+
   get uri() {
     return this._uri;
+  }
+
+  async getFileBlobUri() {
+    var r = new Promise(function (resolve, reject) {
+      const p = vscode.workspace.fs.readFile(this.uri);
+      var z = new JSZip();
+      z.file("filename.pdf", p);
+      z.files[0].async("blob").then(
+        function (f) {
+          resolve(URL.createObjectURL(f));
+        },
+        function (err) {
+          vscode.window.showErrorMessage("There was an error converting the pdf file to a url.");
+          reject(err);
+        }
+      );
+    });
+    return r;
   }
 }
 
@@ -21,7 +41,7 @@ export default class PDFEdit {
 
   constructor() {}
 
-  async resolveCustomEditor(_document, panel, _token) {
+  async resolveCustomEditor(document, panel, _token) {
     panel.webview.options = {
       enableScripts: true,
     };
@@ -54,7 +74,7 @@ export default class PDFEdit {
 </body>
 
 </html>`;
-    // panel.webview.postMessage({ command: "setFrameURI", URI: "" });
+    panel.webview.postMessage({ command: "setFrameURI", URI: await document.getFileBlobUri() });
   }
 
   async openCustomDocument(uri, _context, _token) {
