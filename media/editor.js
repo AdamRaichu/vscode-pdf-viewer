@@ -4,7 +4,7 @@ window.addEventListener("message", (e) => {
 
     var PDFJS = window["pdfjs-dist/build/pdf"];
 
-    PDFJS.GlobalWorkerOptions.workerSrc = "//mozilla.github.io/pdf.js/build/pdf.worker.js";
+    PDFJS.GlobalWorkerOptions.workerSrc = e.data.workerUri;
 
     var loadingTask = PDFJS.getDocument({ data: atob(e.data.data) });
 
