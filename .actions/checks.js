@@ -2,9 +2,13 @@ const fs = require("fs");
 
 module.exports = function () {
   fs.readFile(".actions/cached-version", "utf8", (err, v) => {
-    if (err) throw err;
+    if (err) {
+      core.error(err);
+    }
     fs.readFile("package.json", "utf8", (err, package_raw) => {
-      if (err) throw err;
+      if (err) {
+        core.error(err);
+      }
       package_raw = JSON.parse(package_raw);
       var pV = package_raw.version.split(".");
       var oV = v.split(".");
