@@ -21,7 +21,9 @@ jobs:
         run: npm i @actions/core --save-dev
       - name: Check version
         uses: actions/github-script@v6
+        id: gh-script
         with:
+          result-encoding: string
           script: |
             const runChecks = require(".actions/checks.js");
             runChecks();
@@ -38,6 +40,7 @@ jobs:
         run: |
           npm install -g @vscode/vsce
           ${{ inputs.command }}
+          git tag v${{ steps.gh-script.outputs.result }}
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.1
         with:
