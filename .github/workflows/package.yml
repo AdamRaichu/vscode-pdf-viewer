@@ -17,6 +17,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16
+      - name: Setup actions/core
+        run: npm i @actions/core --save-dev
       - name: Check version
         uses: actions/github-script@v6
         with:
