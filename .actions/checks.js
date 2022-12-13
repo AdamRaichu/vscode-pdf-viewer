@@ -17,7 +17,7 @@ module.exports = function () {
         package_raw.version = [oV[0], oV[1], oV[2] + 1].join("");
         fs.writeFileSync("package.json", JSON.stringify(package_raw, null, 2), "utf8");
       }
-      fs.writeFile(".actions/cached-version", package_raw.version, "utf8");
+      fs.writeFile(".actions/cached-version", package_raw.version, "utf8", () => {});
     });
   });
 };
