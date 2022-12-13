@@ -14,7 +14,8 @@ jobs:
       - uses: actions/checkout@v3
       - name: package with vsce
         run: |
-          npm install -g @vscode/vsce --omit=dev
+          npm install -g @vscode/vsce
+          npm uninstall -g @types/vscode
           ${{ inputs.command }}
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.1
