@@ -12,17 +12,17 @@ class PDFDoc {
     return this._uri;
   }
 
-  async getFileUri(uri) {
+  async getFileData(uri) {
     var r = new Promise(function (resolve, reject) {
       const p = vscode.workspace.fs.readFile(uri);
       var z = new JSZip();
       z.file("filename.pdf", p);
       z.files["filename.pdf"].async("base64").then(
         function (f) {
-          resolve("data:application/pdf;base64," + f);
+          resolve(f);
         },
         function (err) {
-          vscode.window.showErrorMessage("There was an error converting the pdf file to a url.");
+          vscode.window.showErrorMessage("There was an error converting the pdf file to base64.");
           reject(err);
         }
       );
@@ -50,31 +50,21 @@ export default class PDFEdit {
 <html>
 
 <head>
-  <script>
-    window.addEventListener("message", e => {
-      if (e.data.command === "setFrameURI") {
-        document.getElementById("frame").src = e.data.URI;
-      }
-    });
-  </script>
-  <link rel="stylesheet" href="${panel.webview.asWebviewUri(vscode.Uri.joinPath(extUri, "media", "iframe.css"))}">
+  <script src="${panel.webview.asWebviewUri(vscode.Uri.joinPath(extUri, "media", "editor.js"))}"></script>
+  <link rel="stylesheet" href="${panel.webview.asWebviewUri(vscode.Uri.joinPath(extUri, "media", "editor.css"))}">
 </head>
 
 <body>
 
-  <iframe id="frame" src="data:text/html,PDF Viewer is loading your content..."
-    frameborder="0"
-    marginheight="0"
-    marginwidth="0"
-    width="100%"
-    height="100%"
-    scrolling="auto">
-  </iframe>
+  <div id="loading">Your PDF is loading...</div>
+  <div id="canvas"></div>
 
 </body>
 
 </html>`;
-    panel.webview.postMessage({ command: "setFrameURI", URI: await document.getFileUri(document.uri) });
+    document.getFileData(document.uri).then(function (data) {
+      panel.webview.postMessage({ command: "base64", data: data, workerUri: vscode.Uri.joinPath(extUri, "media", "pdf.worker.js") });
+    });
   }
 
   async openCustomDocument(uri, _context, _token) {

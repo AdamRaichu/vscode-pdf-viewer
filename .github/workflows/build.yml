@@ -3,6 +3,7 @@ on:
   push:
     paths:
       - "src/**"
+      - "media/**"
   workflow_dispatch:
     inputs:
       type:
