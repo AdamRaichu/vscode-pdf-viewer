@@ -57,7 +57,7 @@ export default class PDFEdit {
 
 <body>
 
-  <div id="loading">Your PDF is loading...</div>
+  <h1 id="loading">Your PDF is loading...</h1>
   <div id="canvas"></div>
 
 </body>
