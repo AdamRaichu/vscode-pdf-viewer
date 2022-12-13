@@ -4,8 +4,8 @@ on:
     inputs:
       command:
         description: "Full or Pre?"
-        required: true
-        default: "vsce package --target web"
+        required: false
+        default: "vsce package"
         type: string
 jobs:
   build:
