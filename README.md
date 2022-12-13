@@ -10,8 +10,8 @@
 ![Visual Studio Marketplace Rating (Stars)](https://img.shields.io/visual-studio-marketplace/stars/adamraichu.pdf-viewer?color=darkblue&label=Rating&logo=visual%20studio%20code&logoColor=007acc)
 
 [![GitHub issues](https://img.shields.io/github/issues/AdamRaichu/vscode-pdf-viewer)](https://github.com/AdamRaichu/vscode-pdf-viewer/issues)
-![GitHub stars](https://img.shields.io/github/stars/AdamRaichu/vscode-pdf-viewer)
-![GitHub license](https://img.shields.io/github/license/AdamRaichu/vscode-pdf-viewer)
+[![GitHub stars](https://img.shields.io/github/stars/AdamRaichu/vscode-pdf-viewer)](https://github.com/AdamRaichu/vscode-pdf-viewer/stargazers)
+[![GitHub license](https://img.shields.io/github/license/AdamRaichu/vscode-pdf-viewer)](https://github.com/AdamRaichu/vscode-pdf-viewer/blob/main/LICENSE)
 
 </div>
 
