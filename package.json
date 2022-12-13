@@ -39,7 +39,7 @@
     "build": "webpack"
   },
   "devDependencies": {
-    "@types/vscode": "^1.74.0",
+    "@types/vscode": "^1.63.0",
     "webpack": "^5.75.0",
     "webpack-cli": "^5.0.1"
   },
