@@ -15,7 +15,7 @@ module.exports = function () {
       var oV = v.split(".");
       if (pV[0] <= oV[0] && pV[1] <= oV[1] && pV[2] <= oV[2]) {
         core.error("package.json version is not up to date. Incrementing minor.");
-        package_raw.version = [oV[0], oV[1], oV[2] + 1].join("");
+        package_raw.version = [oV[0], oV[1], oV[2] + 1].join(".");
         fs.writeFileSync("package.json", JSON.stringify(package_raw, null, 2), "utf8");
       }
       fs.writeFile(".actions/cached-version", package_raw.version, "utf8", () => {
