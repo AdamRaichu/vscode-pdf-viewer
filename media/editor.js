@@ -7,7 +7,7 @@ window.addEventListener("message", (e) => {
 
     var PDFJS = window["pdfjs-dist/build/pdf"];
 
-    PDFJS.GlobalWorkerOptions.workerSrc = e.data.workerUri;
+    PDFJS.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.1.81/pdf.worker.min.js";
 
     var loadingTask = PDFJS.getDocument("data:application/pdf;base64," + e.data.data);
 
