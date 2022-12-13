@@ -15,7 +15,7 @@
   "repository": {
     "url": "https://github.com/AdamRaichu/vscode-pdf-viewer"
   },
-  "version": "1.0.4",
+  "version": "1041",
   "browser": "/dist/main.js",
   "main": "/dist/main.js",
   "engines": {
