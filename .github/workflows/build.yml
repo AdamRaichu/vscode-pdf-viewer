@@ -29,6 +29,7 @@ jobs:
           npm run build
       - name: Commit Changes
         continue-on-error: true
+        if: github.event_name == 'push'
         run: |
           git pull
           git config user.name github-actions
