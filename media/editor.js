@@ -1,6 +1,7 @@
 console.log("media/editor.js is present");
 
 window.addEventListener("message", (e) => {
+  console.log({ e });
   if (e.data.command === "base64") {
     document.getElementById("loading").remove();
 
@@ -8,7 +9,7 @@ window.addEventListener("message", (e) => {
 
     PDFJS.GlobalWorkerOptions.workerSrc = e.data.workerUri;
 
-    var loadingTask = PDFJS.getDocument({ data: atob(e.data.data) });
+    var loadingTask = PDFJS.getDocument("data:application/pdf;base64," + e.data.data);
 
     loadingTask.promise.then(
       function (pdf) {
