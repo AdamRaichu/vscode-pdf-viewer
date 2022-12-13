@@ -50,7 +50,7 @@ export default class PDFEdit {
 <html>
 
 <head>
-  <script src="${panel.webview.asWebviewUri(vscode.Uri.joinPath(extUri, "media", "pdf.min.js"))}"></script>
+  <script src="${panel.webview.asWebviewUri(vscode.Uri.joinPath(extUri, "media", "pdf.js"))}"></script>
   <script src="${panel.webview.asWebviewUri(vscode.Uri.joinPath(extUri, "media", "editor.js"))}"></script>
   <link rel="stylesheet" href="${panel.webview.asWebviewUri(vscode.Uri.joinPath(extUri, "media", "editor.css"))}">
 </head>
