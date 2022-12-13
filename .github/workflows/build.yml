@@ -4,6 +4,8 @@ on:
     paths:
       - "src/**"
       - "media/**"
+    branches-ignore:
+      - "v*"
   workflow_dispatch:
     inputs:
       type:
