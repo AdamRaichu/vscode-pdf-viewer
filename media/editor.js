@@ -1,3 +1,5 @@
+console.log("media/editor.js is present");
+
 window.addEventListener("message", (e) => {
   if (e.data.command === "base64") {
     document.getElementById("loading").remove();
