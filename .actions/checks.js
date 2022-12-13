@@ -1,6 +1,6 @@
 const fs = require("fs");
 
-export function runChecks() {
+module.exports = function () {
   fs.readFile(".actions/cached-version", "utf8", (err, v) => {
     if (err) throw err;
     fs.readFile("package.json", "utf8", (err, package_raw) => {
@@ -16,4 +16,4 @@ export function runChecks() {
       fs.writeFile(".actions/cached-version", package_raw.version, "utf8");
     });
   });
-}
+};
