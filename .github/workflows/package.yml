@@ -12,6 +12,17 @@ jobs:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
+        name: Checkout repository
+      - name: import Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16
+      - name: Check version
+        uses: actions/github-script@v6
+        with:
+          script: |
+            const runChecks = require(".actions/checks.js");
+            runChecks();
       - name: package with vsce
         run: |
           npm install -g @vscode/vsce
