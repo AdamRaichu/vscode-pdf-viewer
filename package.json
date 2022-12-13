@@ -26,7 +26,7 @@
     "customEditors": [
       {
         "viewType": "pdfViewer.PDFEdit",
-        "displayName": "Browser Native PDF Viewer",
+        "displayName": "PDF Viewer",
         "selector": [
           {
             "filenamePattern": "*.pdf"
