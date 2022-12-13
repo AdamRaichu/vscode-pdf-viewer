@@ -64,7 +64,7 @@ export default class PDFEdit {
 
 </html>`;
     document.getFileData(document.uri).then(function (data) {
-      panel.webview.postMessage({ command: "base64", data: data, workerUri: vscode.Uri.joinPath(extUri, "media", "pdf.worker.js") });
+      panel.webview.postMessage({ command: "base64", data: data, workerUri: vscode.Uri.joinPath(extUri, "media", "pdf.worker.js").toString() });
     });
   }
 
