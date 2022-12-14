@@ -13,7 +13,7 @@ class PDFDoc {
   }
 
   async getFileData(uri) {
-    var r = new Promise(function (resolve, reject) {
+    return new Promise(function (resolve, reject) {
       const p = vscode.workspace.fs.readFile(uri);
       var z = new JSZip();
       z.file("filename.pdf", p);
@@ -27,7 +27,6 @@ class PDFDoc {
         }
       );
     });
-    return r;
   }
 }
 
