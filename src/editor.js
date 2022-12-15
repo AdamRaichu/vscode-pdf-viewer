@@ -56,7 +56,10 @@ export default class PDFEdit {
 
 <body>
 
-  <h1 id="loading">Your PDF is loading...</h1>
+  <div id="loading">
+    <h1>Your PDF is loading...</h1>
+    <p>If you see this screen for more than a few seconds, close this editor tab and reopen the file.</p>
+  </div>
   <div id="canvas"></div>
 
 </body>
