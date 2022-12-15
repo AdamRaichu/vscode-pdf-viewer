@@ -19,28 +19,28 @@ jobs:
           node-version: 16
       - name: Setup actions/core
         run: npm i @actions/core --save-dev
-      - name: Check version
-        uses: actions/github-script@v6
-        id: gh-script
-        with:
-          result-encoding: string
-          script: |
-            const runChecks = require(".actions/checks.js");
-            return runChecks();
-      - name: Commit Changes
-        continue-on-error: true
-        run: |
-          git pull
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add .
-          git commit -m "post runChecks"
-          git push
+      # - name: Check version
+      #   uses: actions/github-script@v6
+      #   id: gh-script
+      #   with:
+      #     result-encoding: string
+      #     script: |
+      #       const runChecks = require(".actions/checks.js");
+      #       return runChecks();
+      # - name: Commit Changes
+      #   continue-on-error: true
+      #   run: |
+      #     git pull
+      #     git config user.name github-actions
+      #     git config user.email github-actions@github.com
+      #     git add .
+      #     git commit -m "post runChecks"
+      #     git push
       - name: package with vsce
         run: |
           npm install -g @vscode/vsce
           ${{ inputs.command }}
-          git tag v${{ steps.gh-script.outputs.result }}
+          # git tag v${{ steps.gh-script.outputs.result }}
       - name: Upload a Build Artifact
         uses: actions/upload-artifact@v3.1.1
         with:
