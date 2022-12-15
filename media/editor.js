@@ -12,7 +12,6 @@ window.addEventListener("message", (e) => {
       function (pdf) {
         var canvasdiv = document.getElementById("canvas");
         var totalPages = pdf.numPages;
-        var data = [];
 
         for (let pageNumber = 1; pageNumber <= totalPages; pageNumber++) {
           pdf.getPage(pageNumber).then(function (page) {
@@ -31,10 +30,6 @@ window.addEventListener("message", (e) => {
             var renderContext = { canvasContext: context, viewport: viewport };
 
             var renderTask = page.render(renderContext);
-            renderTask.promise.then(function () {
-              data.push(canvas.toDataURL("image/png"));
-              console.log(data.length + " page(s) loaded in data");
-            });
           });
         }
       },
