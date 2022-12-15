@@ -1,5 +1,4 @@
 window.addEventListener("message", (e) => {
-  console.log({ e });
   if (e.data.command === "base64") {
     document.getElementById("loading").remove();
 
