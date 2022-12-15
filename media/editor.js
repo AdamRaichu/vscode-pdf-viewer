@@ -1,5 +1,3 @@
-console.log("media/editor.js is present");
-
 window.addEventListener("message", (e) => {
   console.log({ e });
   if (e.data.command === "base64") {
