@@ -1,48 +1,66 @@
-name: Package Extension
+name: Publish Extension
 on:
-  workflow_call:
+  workflow_dispatch:
     inputs:
-      command:
-        description: "Full or Pre?"
+      preRelease:
+        type: boolean
+        required: true
+        default: false
+      continueOnTagErr:
+        type: boolean
         required: false
-        default: "vsce package"
-        type: string
+        default: false
+  workflow_call:
+    secrets:
+      AZURE_PAT:
+        required: true
+        description: The PAT to use to publish the extension to the vscode marketplace.
+      OPEN_VSX_TOKEN:
+        required: true
+        description: The PAT to use to public the extension to open-vsx.org.
+    inputs:
+      preRelease:
+        type: boolean
+        required: true
+        default: false
+      continueOnTagErr:
+        type: boolean
+        required: false
+        default: false
+permissions:
+  contents: write
 jobs:
   build:
     runs-on: windows-latest
     steps:
       - uses: actions/checkout@v3
         name: Checkout repository
-      - name: import Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 16
-      - name: Setup actions/core
-        run: npm i @actions/core --save-dev
-      # - name: Check version
-      #   uses: actions/github-script@v6
-      #   id: gh-script
-      #   with:
-      #     result-encoding: string
-      #     script: |
-      #       const runChecks = require(".actions/checks.js");
-      #       return runChecks();
-      # - name: Commit Changes
-      #   continue-on-error: true
-      #   run: |
-      #     git pull
-      #     git config user.name github-actions
-      #     git config user.email github-actions@github.com
-      #     git add .
-      #     git commit -m "post runChecks"
-      #     git push
-      - name: package with vsce
+      - name: Configure git
         run: |
-          npm install -g @vscode/vsce
-          ${{ inputs.command }}
-          # git tag v${{ steps.gh-script.outputs.result }}
-      - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v3.1.1
+          git config user.name = "Github Actions"
+          git config user.email = "actions@github.com"
+          git pull
+      - uses: jozsefsallai/node-package-version@v1.0.4
+        name: get package version as env variable
+      - name: Create a tag
+        continue-on-error: ${{ inputs.continueOnTagErr }}
+        run: |
+          git tag -a v${{ env.PACKAGE_VERSION }} -m "Version ${{ env.PACKAGE_VERSION }}"
+          git push origin v${{ env.PACKAGE_VERSION }}
+      - name: Generate Files
+        run: |
+          npm i
+          npm run build
+      - name: Publish to Open VSX Registry
+        uses: HaaLeo/publish-vscode-extension@v1
+        id: publishToOpenVSX
         with:
-          name: Extension Package
-          path: ./*.vsix
+          pat: ${{ secrets.OPEN_VSX_TOKEN }}
+          preRelease: ${{ inputs.preRelease }}
+      - name: Publish to Visual Studio Marketplace
+        uses: HaaLeo/publish-vscode-extension@v1
+        with:
+          pat: ${{ secrets.AZURE_PAT }}
+          preRelease: ${{ inputs.preRelease }}
+          registryUrl: https://marketplace.visualstudio.com
+          extensionFile: ${{ steps.publishToOpenVSX.outputs.vsixPath }}
