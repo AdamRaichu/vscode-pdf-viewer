@@ -9,6 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 An "Open on the web" button.
 
+## [1.1.0] - 2023-12-19 (As pre-release)
+
+Extension no longer needs the internet to load the worker.
+
+An API is now available for other extensions to use to display PDF file previews.
+
 ## [1.0.4] - 2022-12-13
 
 This is the initial release of the extension. PDF files are displayed as a series of images on canvases.

@@ -1,6 +1,11 @@
+import PdfViewerApi from "./api";
+
 const vscode = require("vscode");
 const JSZip = require("jszip");
 
+/**
+ * @implements {import("..").PdfFileDataProvider}
+ */
 class PDFDoc {
   constructor(uri) {
     this._uri = uri;
@@ -12,17 +17,18 @@ class PDFDoc {
     return this._uri;
   }
 
-  async getFileData(uri) {
+  async getFileData() {
+    var uri = this.uri;
     return new Promise(function (resolve, reject) {
-      const p = vscode.workspace.fs.readFile(uri);
-      var z = new JSZip();
-      z.file("filename.pdf", p);
-      z.files["filename.pdf"].async("base64").then(
-        function (f) {
-          resolve(f);
+      vscode.workspace.fs.readFile(uri).then(
+        function (fileData) {
+          return PdfViewerApi.PdfFileDataProvider.fromUint8Array(fileData)
+            .getFileData()
+            .then(function (data) {
+              resolve(data);
+            });
         },
         function (err) {
-          vscode.window.showErrorMessage("There was an error converting the pdf file to base64.");
           reject(err);
         }
       );
@@ -41,10 +47,23 @@ export default class PDFEdit {
   constructor() {}
 
   async resolveCustomEditor(document, panel, _token) {
+    PDFEdit.previewPdfFile(document, panel);
+  }
+
+  async openCustomDocument(uri, _context, _token) {
+    return new PDFDoc(uri);
+  }
+
+  /**
+   *
+   * @param {import("..").PdfFileDataProvider} dataProvider The object containing the pdf file data.
+   * @param {vscode.WebviewPanel} panel The webview panel object to use.
+   */
+  static previewPdfFile(dataProvider, panel) {
+    const extUri = vscode.extensions.getExtension("adamraichu.pdf-viewer").extensionUri;
     panel.webview.options = {
       enableScripts: true,
     };
-    var extUri = vscode.extensions.getExtension("adamraichu.pdf-viewer").extensionUri;
     panel.webview.html = `<!DOCTYPE html>
 <html>
 
@@ -65,12 +84,8 @@ export default class PDFEdit {
 </body>
 
 </html>`;
-    document.getFileData(document.uri).then(function (data) {
-      panel.webview.postMessage({ command: "base64", data: data, workerUri: vscode.Uri.joinPath(extUri, "media", "pdf.worker.js").toString() });
+    dataProvider.getFileData().then(function (data) {
+      panel.webview.postMessage({ command: "base64", data: data, workerUri: panel.webview.asWebviewUri(vscode.Uri.joinPath(extUri, "media", "pdf.worker.min.js")).toString(true) });
     });
-  }
-
-  async openCustomDocument(uri, _context, _token) {
-    return new PDFDoc(uri);
   }
 }

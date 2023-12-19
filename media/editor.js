@@ -1,5 +1,6 @@
 const vscode = acquireVsCodeApi();
 const oldState = vscode.getState();
+var workerSrc = "";
 
 if (oldState) {
   previewPdf(oldState.base64Data);
@@ -7,17 +8,18 @@ if (oldState) {
 
 window.addEventListener("message", (event) => {
   if (event.data.command === "base64") {
+    workerSrc = event.data.workerUri;
     previewPdf(event.data.data);
     vscode.setState({ base64Data: event.data.data });
   }
 });
 
 function previewPdf(base64Data) {
-  document.getElementById("loading").remove();
+  document.getElementById("loading")?.remove();
 
   var PDFJS = window["pdfjs-dist/build/pdf"];
 
-  PDFJS.GlobalWorkerOptions.workerSrc = "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.1.81/pdf.worker.min.js";
+  PDFJS.GlobalWorkerOptions.workerSrc = workerSrc;
 
   var loadingTask = PDFJS.getDocument("data:application/pdf;base64," + base64Data);
 
