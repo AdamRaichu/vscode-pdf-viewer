@@ -35,6 +35,7 @@ class PdfFileDataProvider {
 
   withName(newName) {
     this.name = newName;
+    return this;
   }
 
   getFileData() {
