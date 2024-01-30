@@ -1,7 +1,7 @@
 {
   "name": "pdf-viewer",
   "displayName": "PDF Viewer",
-  "description": "An extension which allows for viewing PDF files directly in VS Code Web using the browser native viewer.",
+  "description": "An extension which allows for viewing PDF files directly in VS Code (web-compatible!).",
   "publisher": "adamraichu",
   "icon": "pdf-flat.png",
   "author": {
@@ -19,11 +19,9 @@
   "browser": "/dist/main.js",
   "main": "/dist/main.js",
   "engines": {
-    "vscode": "^1.63.0"
+    "vscode": "^1.75.0"
   },
-  "activationEvents": [
-    "onCustomEditor:pdfViewer.PDFEdit"
-  ],
+  "activationEvents": [],
   "contributes": {
     "customEditors": [
       {
