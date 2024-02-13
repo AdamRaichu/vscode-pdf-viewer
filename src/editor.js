@@ -1,7 +1,6 @@
 import PdfViewerApi from "./api";
 
 const vscode = require("vscode");
-const JSZip = require("jszip");
 
 /**
  * @implements {import("..").PdfFileDataProvider}
