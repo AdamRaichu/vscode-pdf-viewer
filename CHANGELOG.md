@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-An "Open on the web" button.
+No unplanned features as of right now.
+
+## [1.1.2] - 2024-2-13
+
+API is released as a full version. **Important**: Obtaining the API works differently in this version than in `1.1.0`, so if for some reason you were already using this API you need to update it.
 
 ## [1.1.0] - 2023-12-19 (As pre-release)
 
