@@ -3,5 +3,9 @@ import PdfViewerApi from "./api.js";
 
 exports.activate = function (context) {
   PDFEdit.register();
-  return PdfViewerApi;
+  return {
+    getV1Api: function () {
+      return PdfViewerApi;
+    },
+  };
 };
